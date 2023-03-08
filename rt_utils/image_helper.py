@@ -60,7 +60,8 @@ def get_contours_coords(roi_data: ROIData, series_data):
             mask_slice = create_pin_hole_mask(mask_slice, roi_data.approximate_contours)
 
         # Get contours from mask
-        contours, _ = find_mask_contours(mask_slice, roi_data.approximate_contours)
+        # contours, _ = find_mask_contours(mask_slice, roi_data.approximate_contours)
+        contours = find_mask_contours_raster(mask_slice)
         validate_contours(contours)
 
         # Format for DICOM
@@ -99,6 +100,23 @@ def find_mask_contours(mask: np.ndarray, approximate_contours: bool):
 
     return contours, hierarchy
 
+
+def find_mask_contours_raster(mask: np.ndarray):
+    # contours
+    # [[[100, 100], [100, 199], [199, 199], [199, 100]], [[], []], ...]
+
+    from rasterio import features
+
+    mask = mask.astype(np.uint8)
+    shapes = features.shapes(mask, mask=mask)
+
+    contours = []
+    for g, v in shapes:
+        for coord in g['coordinates']:
+            coord_int = np.array(coord).astype(np.int16).tolist()
+            contours.append(coord_int)
+
+    return contours
 
 def create_pin_hole_mask(mask: np.ndarray, approximate_contours: bool):
     """
