@@ -178,6 +178,9 @@ def get_pixel_to_patient_transformation_matrix(series_data):
     slice_spacing = get_spacing_between_slices(series_data)
     row_direction, column_direction, slice_direction = get_slice_directions(first_slice)
 
+    # Fix the offset issue
+    offset += np.array([row_spacing/2, column_spacing/2, 0])
+
     mat = np.identity(4, dtype=np.float32)
     mat[:3, 0] = row_direction * row_spacing
     mat[:3, 1] = column_direction * column_spacing
