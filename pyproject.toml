@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "rt-utils"
+version = "0.1.0"
+description = "rt-utils with raster"
+authors = ["Yu Sun <sunyu0410@gmail.com>"]
+readme = "README.md"
+packages = [{include = "rt_utils"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
