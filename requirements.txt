@@ -1,4 +1,29 @@
-pydicom
-numpy
-opencv-python
 dataclasses
+matplotlib
+nibabel
+opencv-python
+pip
+pip-chill
+pydicom
+rasterio
+# affine # Installed as dependency for rasterio
+# attrs # Installed as dependency for rasterio
+# certifi # Installed as dependency for rasterio
+# click # Installed as dependency for cligj, click-plugins, rasterio
+# click-plugins # Installed as dependency for rasterio
+# cligj # Installed as dependency for rasterio
+# colorama # Installed as dependency for click
+# contourpy # Installed as dependency for matplotlib
+# cycler # Installed as dependency for matplotlib
+# fonttools # Installed as dependency for matplotlib
+# importlib-resources # Installed as dependency for matplotlib
+# kiwisolver # Installed as dependency for matplotlib
+# numpy # Installed as dependency for contourpy, opencv-python, rasterio, snuggs, matplotlib, nibabel
+# packaging # Installed as dependency for nibabel, matplotlib
+# pillow # Installed as dependency for matplotlib
+# pyparsing # Installed as dependency for snuggs, matplotlib
+# python-dateutil # Installed as dependency for matplotlib
+# setuptools # Installed as dependency for nibabel, rasterio
+# six # Installed as dependency for python-dateutil
+# snuggs # Installed as dependency for rasterio
+# zipp # Installed as dependency for importlib-resources
