@@ -149,15 +149,17 @@ def create_structure_set_roi(roi_data: ROIData) -> Dataset:
     return structure_set_roi
 
 
-def create_roi_contour(roi_data: ROIData, series_data) -> Dataset:
+def create_roi_contour(roi_data: ROIData, series_data, n_offset=0) -> Dataset:
+    '''n_offset: number of voxels for the offset.
+    Sometimes there's a half an voxel off. This argument is to correct for that.'''
     roi_contour = Dataset()
     roi_contour.ROIDisplayColor = roi_data.color
-    roi_contour.ContourSequence = create_contour_sequence(roi_data, series_data)
+    roi_contour.ContourSequence = create_contour_sequence(roi_data, series_data, n_offset)
     roi_contour.ReferencedROINumber = str(roi_data.number)
     return roi_contour
 
 
-def create_contour_sequence(roi_data: ROIData, series_data) -> Sequence:
+def create_contour_sequence(roi_data: ROIData, series_data, n_offset=0) -> Sequence:
     """
     Iterate through each slice of the mask
     For each connected segment within a slice, create a contour
@@ -165,7 +167,7 @@ def create_contour_sequence(roi_data: ROIData, series_data) -> Sequence:
 
     contour_sequence = Sequence()
 
-    contours_coords = get_contours_coords(roi_data, series_data)
+    contours_coords = get_contours_coords(roi_data, series_data, n_offset)
 
     for series_slice, slice_contours in zip(series_data, contours_coords):
         for contour_data in slice_contours:

@@ -43,8 +43,8 @@ def load_dcm_images_from_path(dicom_series_path: str) -> List[Dataset]:
     return series_data
 
 
-def get_contours_coords(roi_data: ROIData, series_data):
-    transformation_matrix = get_pixel_to_patient_transformation_matrix(series_data)
+def get_contours_coords(roi_data: ROIData, series_data, n_offset=0):
+    transformation_matrix = get_pixel_to_patient_transformation_matrix(series_data, n_offset)
 
     series_contours = []
     for i, series_slice in enumerate(series_data):
@@ -166,7 +166,7 @@ def validate_contours(contours: list):
         )
 
 
-def get_pixel_to_patient_transformation_matrix(series_data):
+def get_pixel_to_patient_transformation_matrix(series_data, n_offset=0):
     """
     https://nipy.org/nibabel/dicom/dicom_orientation.html
     """
@@ -179,7 +179,7 @@ def get_pixel_to_patient_transformation_matrix(series_data):
     row_direction, column_direction, slice_direction = get_slice_directions(first_slice)
 
     # Fix the offset issue
-    offset += np.array([row_spacing/2, column_spacing/2, 0])
+    offset += np.array([row_spacing*n_offset, column_spacing*n_offset, 0])
 
     mat = np.identity(4, dtype=np.float32)
     mat[:3, 0] = row_direction * row_spacing

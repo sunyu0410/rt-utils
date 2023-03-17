@@ -8,9 +8,9 @@ rtstruct = RTStructBuilder.create_new('raster/ct-dcm')
 mask = nib.load('raster/seg-test.nii.gz').get_fdata().astype(np.uint8)
 
 mask = np.swapaxes(mask, 0, 1) # mask.shape[:2] must match with dcm.pixel_array.shape
-mask1 = mask==1
+mask1 = np.isin(mask, [1,2,3])
 
-rtstruct.add_roi(mask1, name='mask1')
+rtstruct.add_roi(mask1, name='mask1', n_offset=0.5)
 
 rtstruct.save('raster/mask1')
 

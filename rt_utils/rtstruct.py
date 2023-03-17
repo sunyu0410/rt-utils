@@ -35,6 +35,7 @@ class RTStruct:
         use_pin_hole: bool = False,
         approximate_contours: bool = True,
         roi_generation_algorithm: Union[str, int] = 0,
+        n_offset: float = 0.0
     ):
         """
         Add a ROI to the rtstruct given a 3D binary mask for the ROI's at each slice
@@ -59,7 +60,7 @@ class RTStruct:
         )
 
         self.ds.ROIContourSequence.append(
-            ds_helper.create_roi_contour(roi_data, self.series_data)
+            ds_helper.create_roi_contour(roi_data, self.series_data, n_offset)
         )
         self.ds.StructureSetROISequence.append(
             ds_helper.create_structure_set_roi(roi_data)
